@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Configuration;
 /**
  * @Author WangSongWen
  * @Date: Created in 14:55 2020/7/13
- * @Description: 生产者推送消息的消息确认 回调函数的使用
- *               可以在回调函数根据需求做对应的扩展或者业务数据处理
+ * @Description: 生产者推送消息的消息确认 回调函数的使用。可以在回调函数根据需求做对应的扩展或者业务数据处理
  */
 @Configuration
 public class RabbitConfig {
