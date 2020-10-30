@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date: Created in 10:59 2020/7/13
  * @Description:
  */
-/*@Configuration
+@Configuration
 public class DirectRabbitConfig {
     @Bean
     Queue directQueue(){
@@ -28,4 +28,4 @@ public class DirectRabbitConfig {
     Binding bindingDirect(){
         return BindingBuilder.bind(directQueue()).to(directExchange()).with("TestDirectRouting");
     }
-}*/
+}

@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * @Date: Created in 10:59 2020/7/13
  * @Description: 交换器类型：Fanout
  */
-@Configuration
+//@Configuration
 public class FanoutRabbitConfig {
     //队列1
     @Bean
