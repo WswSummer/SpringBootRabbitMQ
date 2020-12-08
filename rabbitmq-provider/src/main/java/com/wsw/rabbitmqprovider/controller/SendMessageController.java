@@ -1,5 +1,7 @@
 package com.wsw.rabbitmqprovider.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.wsw.rabbitmqprovider.service.MessageService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +22,8 @@ import java.util.UUID;
 public class SendMessageController {
     @Autowired
     RabbitTemplate rabbitTemplate;
+    @Autowired
+    private MessageService messageService;
 
     @GetMapping("/send1")
     public String sendMessageToDirect(){
@@ -98,5 +102,14 @@ public class SendMessageController {
         map.put("createTime", createTime);
         rabbitTemplate.convertAndSend("lonelyDirectExchange", "TestDirectRouting", map);
         return "ok";
+    }
+
+    @GetMapping("/wsw/send")
+    public void sendMessage(){
+        Map<String, Object> messageMap = new HashMap<>();
+        messageMap.put("id", 1);
+        messageMap.put("name", "wsw");
+        messageMap.put("pass", "123456");
+        messageService.sendMessage(messageMap);
     }
 }
