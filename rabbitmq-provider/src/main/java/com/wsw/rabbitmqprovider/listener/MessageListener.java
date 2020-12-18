@@ -22,11 +22,11 @@ public class MessageListener {
     @RabbitListener(queues = "wswQueue")
     public void reciver(Message message, Channel channel, Map<String, Object> messageMap) throws IOException {
         try {
-            channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             System.out.println("接受到的消息为: " + messageMap);
         } catch (Exception e) {
-            channel.basicNack(message.getMessageProperties().getDeliveryTag(), false, true);
+            channel.basicReject(message.getMessageProperties().getDeliveryTag(), false);
             e.printStackTrace();
         }
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 }
