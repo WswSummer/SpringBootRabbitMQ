@@ -6,6 +6,8 @@ import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.io.IOException;
 
@@ -22,6 +24,7 @@ public class DirectDeadListener {
      * 指定消费的队列
      */
     @RabbitHandler
+    @Transactional
     public void consume(String msg, Message message, Channel channel){
         boolean success = false;
         int retryCount = 3;
@@ -37,6 +40,8 @@ public class DirectDeadListener {
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
             }catch (Exception e){
                 log.error("程序异常：{}", e.getMessage());
+                // 回滚事务
+                TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             }
         }
         // 达到最大重试次数后仍然消费失败
